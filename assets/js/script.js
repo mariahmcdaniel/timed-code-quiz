@@ -9,3 +9,12 @@
 // THEN the game is over
 // WHEN the game is over
 // THEN I can save my initials and my score
+
+var form = document.querySelector('form');
+var answers = ["choice1", "choice2", "choice3", "choice4", "choice1"];
+
+var userScore = localStorage.getItem("userScore");
+
+form.addEventListener('submit', function (event) {
+    event.preventDefault();
+});
