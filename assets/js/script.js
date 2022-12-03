@@ -12,9 +12,15 @@
 
 var form = document.querySelector('form');
 var answers = ["choice1", "choice2", "choice3", "choice4", "choice1"];
+var q1 = document.forms['codeQuiz']['firstQ'].input;
+var q2 = document.forms['codeQuiz']['secondQ'].value;
+var q3 = document.forms['codeQuiz']['thirdQ'].value;
+var q4 = document.forms['codeQuiz']['fourthQ'].value;
+var q5 = document.forms['codeQuiz']['fifthQ'].value;
 
 var userScore = localStorage.getItem("userScore");
 
 form.addEventListener('submit', function (event) {
     event.preventDefault();
 });
+
