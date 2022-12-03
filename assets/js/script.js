@@ -11,16 +11,43 @@
 // THEN I can save my initials and my score
 
 var form = document.querySelector('form');
+var nextEl = document.querySelector('.advance');
+var boxes = document.querySelectorAll('.box');
 var answers = ["choice1", "choice2", "choice3", "choice4", "choice1"];
-var q1 = document.forms['codeQuiz']['firstQ'].input;
-var q2 = document.forms['codeQuiz']['secondQ'].value;
-var q3 = document.forms['codeQuiz']['thirdQ'].value;
-var q4 = document.forms['codeQuiz']['fourthQ'].value;
-var q5 = document.forms['codeQuiz']['fifthQ'].value;
+var cursor = 0;
 
-var userScore = localStorage.getItem("userScore");
+console.log(boxes[1].dataset.index);
+console.log(boxes)
 
-form.addEventListener('submit', function (event) {
-    event.preventDefault();
-});
+// var userScore = localStorage.getItem("userScore");
+
+var displayBox = function () {
+    for (var box of boxes) {
+        if (box.dataset.index == cursor) {
+            box.setAttribute("style", "display: block")
+        } else {
+            box.setAttribute("style", "display: none")
+        }
+    }
+};
+
+var advance = function () {
+    if (cursor < boxes.length - 1) {
+        cursor++
+    }
+    displayBox();
+};
+
+nextEl.addEventListener('click', advance)
+
+// form.addEventListener('submit', function (event) {
+//     event.preventDefault();
+//     var el = event.target;
+
+//     if (el.matches('#choice')) {
+
+//     }
+// });
+
+displayBox();
 
