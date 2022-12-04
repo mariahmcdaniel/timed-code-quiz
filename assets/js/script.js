@@ -11,29 +11,20 @@
 // THEN I can save my initials and my score
 
 var form = document.forms.codeQuiz;
-var radio1 = form.elements.firstQ;
-var value1 = radio1.value;
-var radio2 = form.elements.secondQ;
-var value2 = radio2.value;
-var radio3 = form.elements.thirdQ;
-var value3 = radio3.value
-var radio4 = form.elements.fourthQ;
-var value4 = radio4.value;
-var radio5 = form.elements.fifthQ;
-var value5 = radio5.value;
 var nextEl = document.querySelector('.advance');
 var boxes = document.querySelectorAll('.box');
-var answers = ["a", "b", "c", "d", "a"];
+var answers = ['a', 'b', 'c', 'd', 'a'];
 var cursor = 0;
 var score = 0;
-// var userScore = localStorage.getItem("userScore");
+var savedName = localStorage.getItem('userName');
+var savedScore = localStorage.getItem('score')
 
 var displayBox = function () {
     for (var box of boxes) {
         if (box.dataset.index == cursor) {
-            box.setAttribute("style", "display: block")
+            box.setAttribute('style', 'display: block')
         } else {
-            box.setAttribute("style", "display: none")
+            box.setAttribute('style', 'display: none')
         }
     }
 };
@@ -46,6 +37,7 @@ var advance = function () {
 };
 
 nextEl.addEventListener('click', advance)
+var save = document.querySelector('#save');
 
 form.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -61,9 +53,22 @@ form.addEventListener('submit', function (event) {
             score++
         }
     }
-    console.log("score: " + score)
+    var finishEl = document.querySelector('p');
+    finishEl.textContent = 'your score is:' + score;
+    localStorage.setItem('score', score);
 
 });
+var highScores = document.querySelector('article');
+var userName = document.querySelector('#userNameInput').value;
+
+save.addEventListener('click', function (event) {
+    event.preventDefault();
+
+    localStorage.setItem('userName', userName);
+    highScores.textContent = savedName + ': ' + savedScore;
+
+})
+
 
 displayBox();
 
