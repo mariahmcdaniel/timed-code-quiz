@@ -20,6 +20,7 @@ var savedName = localStorage.getItem('userName');
 var savedScore = localStorage.getItem('score');
 var timerEl = document.querySelector('h1');
 var secondsLeft = 100;
+var finalScore = (score * 10) + secondsLeft;
 
 var displayTime = function () {
     timerEl.textContent = secondsLeft;
@@ -62,7 +63,8 @@ var advance = function () {
 
 nextEl.addEventListener('click', advance)
 var save = document.querySelector('#save');
-var finishEl = document.querySelector('#endMessage');
+var finishEl = document.querySelector('p');
+
 
 form.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -72,28 +74,36 @@ form.addEventListener('submit', function (event) {
     var checked4 = document.querySelector('input[name="fourthQ"]:checked').value;
     var checked5 = document.querySelector('input[name="fifthQ"]:checked').value;
     var chex = [checked1, checked2, checked3, checked4, checked5];
-    console.log(chex);
     for (var i = 0; i < chex.length; i++) {
         if (chex[i] === answers[i]) {
             score++
         }
     }
-    finishEl.textContent = 'your score is:' + ((score * 10) + secondsLeft);
-    localStorage.setItem('score', score);
+    score += (score * 10) + secondsLeft;
+    finishEl.textContent = 'your score is:' + finalScore;
     advance();
-
-
 });
-var highScores = document.querySelector('article');
+
+var highScoresEl = document.querySelector('ul');
+
+var showHighScores = function (obj) {
+    for (ob of obj) {
+        var o = document.createElement('li')
+        o.textContent = ob;
+        highScoresEl.appendChild(o)
+    }
+
+};
 
 save.addEventListener('click', function (event) {
     event.preventDefault();
-
+    var scoresObj = JSON.parse(localStorage.getItem('scoresObj')) || [];
     var userName = document.querySelector('#userNameInput').value;
-    localStorage.setItem('userName', userName);
-    finishEl.textContent = savedName + ': ' + savedScore;
-
-})
+    scoresObj.push(userName + ":" + score)
+    console.log(scoresObj)
+    localStorage.setItem('scoresObj', JSON.stringify(scoresObj));
+    showHighScores(scoresObj);
+});
 
 
 displayBox();
