@@ -13,7 +13,7 @@
 var form = document.forms.codeQuiz;
 var nextEl = document.querySelector('.advance');
 var boxes = document.querySelectorAll('.box');
-var answers = ['a', 'b', 'c', 'd', 'a'];
+var answers = ['b', 'b', 'c', 'd', 'a'];
 var cursor = 0;
 var score = 0;
 var savedName = localStorage.getItem('userName');
@@ -81,7 +81,7 @@ form.addEventListener('submit', function (event) {
     finishEl.textContent = 'your score is:' + ((score * 10) + secondsLeft);
     localStorage.setItem('score', score);
     advance();
-    // nextEl.setAttribute("style", "display: none")
+
 
 });
 var highScores = document.querySelector('article');
@@ -92,7 +92,7 @@ save.addEventListener('click', function (event) {
     var userName = document.querySelector('#userNameInput').value;
     localStorage.setItem('userName', userName);
     finishEl.textContent = savedName + ': ' + savedScore;
-    // nextEl.setAttribute("style", "display: none");
+
 })
 
 
