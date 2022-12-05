@@ -1,0 +1,15 @@
+#firstMessage {
+    text-align: center;
+}
+
+
+.box {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 20px;
+    text-align: right;
+}
