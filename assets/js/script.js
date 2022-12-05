@@ -79,30 +79,46 @@ form.addEventListener('submit', function (event) {
             score++
         }
     }
-    score += (score * 10) + secondsLeft;
-    finishEl.textContent = 'your score is:' + finalScore;
+    score += ((score * 20) + secondsLeft);
+    console.log(score);
+    finishEl.textContent = 'your score is:' + score;
     advance();
 });
 
 var highScoresEl = document.querySelector('ul');
-
+endGameEl = document.querySelector('#endGame');
 var showHighScores = function (obj) {
     for (ob of obj) {
         var o = document.createElement('li')
         o.textContent = ob;
         highScoresEl.appendChild(o)
     }
-
+    playAgain = document.createElement('button');
+    playAgain.textContent = 'Play Again';
+    endGameEl.appendChild(playAgain);
+    playAgain.addEventListener('click', function (event) {
+        event.preventDefault();
+        cursor = 0;
+        nextEl.setAttribute('style', 'display: block');
+        secondsLeft = 100;
+        displayTime();
+        displayBox()
+    })
 };
 
 save.addEventListener('click', function (event) {
     event.preventDefault();
     var scoresObj = JSON.parse(localStorage.getItem('scoresObj')) || [];
-    var userName = document.querySelector('#userNameInput').value;
-    scoresObj.push(userName + ":" + score)
+    var userNameEl = document.querySelector('#userNameInput');
+    var userName = userNameEl.value;
+    var userNameLabel = document.querySelector('#userNameLabel');
+    scoresObj.push(userName + ':' + score)
     console.log(scoresObj)
     localStorage.setItem('scoresObj', JSON.stringify(scoresObj));
     showHighScores(scoresObj);
+    save.setAttribute('style', 'display: none');
+    userNameEl.setAttribute('style', 'display: none');
+    userNameLabel.setAttribute('style', 'display: none');
 });
 
 
