@@ -11,7 +11,9 @@
 <h1></h1>
 <div class="container">
     <section class="box" id="welcome" data-index="0">
-        <h2>Welcome message and instructions</h2>
+        <h2>Coding Quiz Challenge!</h2>
+        <p>Correct answers, as well as the time it takes to answer the questions will effect your final score</p>
+
     </section>
     <form id="quizForm" name="codeQuiz">
         <section class="box" id="question1" data-index="1">
@@ -26,7 +28,7 @@
             <label for="q1C4">push()</label>
         </section>
         <section class="box" id="question2" data-index="2">
-            <h2>Which of the following should only be used once in an HTMl document?</h2>
+            <h2>Which of the following should only be used once in an HTML document?</h2>
             <input type="radio" class="choice" id="q2C1" data-choice="a" value="a" name="secondQ" required>
             <label for="q2C1">article element</label>
             <input type="radio" class="choice" id="q2C2" data-choice="b" value="b" name="secondQ">
@@ -73,7 +75,7 @@
     </form>
     <section class="box" id="complete" data-index="6">
         <h3>You completed the code quiz!</h3>
-        <p></p>
+        <p id="endMessage"></p>
         <h3></h3>
         <input id="userNameInput" name="save" type="text">
         <label for="save">Add your initials and save your score</label>

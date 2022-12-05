@@ -62,7 +62,7 @@ var advance = function () {
 
 nextEl.addEventListener('click', advance)
 var save = document.querySelector('#save');
-var finishEl = document.querySelector('p');
+var finishEl = document.querySelector('#endMessage');
 
 form.addEventListener('submit', function (event) {
     event.preventDefault();
