@@ -17,7 +17,26 @@ var answers = ['a', 'b', 'c', 'd', 'a'];
 var cursor = 0;
 var score = 0;
 var savedName = localStorage.getItem('userName');
-var savedScore = localStorage.getItem('score')
+var savedScore = localStorage.getItem('score');
+var timerEl = document.querySelector('h1');
+var secondsLeft = 100;
+
+var displayTime = function () {
+    timerEl.textContent = secondsLeft;
+};
+
+var setTime = function () {
+    displayTime();
+    var timerInterval = setInterval(function () {
+        secondsLeft--;
+        displayTime();
+
+        if (secondsLeft === 0 || cursor > boxes.length - 4) {
+            clearInterval(timerInterval);
+        }
+
+    }, 500);
+};
 
 var displayBox = function () {
     for (var box of boxes) {
@@ -32,12 +51,18 @@ var displayBox = function () {
 var advance = function () {
     if (cursor < boxes.length - 1) {
         cursor++
+        if (cursor === 1) {
+            setTime();
+        } else if (cursor >= 5) {
+            nextEl.setAttribute("style", "display: none")
+        }
     }
     displayBox();
 };
 
 nextEl.addEventListener('click', advance)
 var save = document.querySelector('#save');
+var finishEl = document.querySelector('p');
 
 form.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -53,22 +78,24 @@ form.addEventListener('submit', function (event) {
             score++
         }
     }
-    var finishEl = document.querySelector('p');
-    finishEl.textContent = 'your score is:' + score;
+    finishEl.textContent = 'your score is:' + ((score * 10) + secondsLeft);
     localStorage.setItem('score', score);
+    advance();
+    // nextEl.setAttribute("style", "display: none")
 
 });
 var highScores = document.querySelector('article');
-var userName = document.querySelector('#userNameInput').value;
 
 save.addEventListener('click', function (event) {
     event.preventDefault();
 
+    var userName = document.querySelector('#userNameInput').value;
     localStorage.setItem('userName', userName);
-    highScores.textContent = savedName + ': ' + savedScore;
-
+    finishEl.textContent = savedName + ': ' + savedScore;
+    // nextEl.setAttribute("style", "display: none");
 })
 
 
 displayBox();
+
 
