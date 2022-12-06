@@ -45,39 +45,41 @@ var advance = function () {
         cursor++
         if (cursor === 1) {
             setTime();
-        } else if (cursor >= 5) {
-            nextEl.setAttribute("style", "display: none")
         }
     }
     displayBox();
 };
 
+form.addEventListener('change', function (event) {
+    var radio = event.target;
+    if (radio.matches('.choice')) {
+        if (radio.value == answers[cursor - 1]) {
+            score += 20;
+            alert('correct!');
+        } else {
+            secondsLeft -= 5;
+            alert('incorrect! -5 seconds')
+            displayTime();
+        }
+        advance();
+    }
+});
+
 nextEl.addEventListener('click', advance)
 var save = document.querySelector('#save');
-var finishEl = document.querySelector('p');
-
+var finishEl = document.querySelector('#completeEl');
+var submitButton = document.querySelector('#submitButton');
 
 form.addEventListener('submit', function (event) {
     event.preventDefault();
-    var checked1 = document.querySelector('input[name="firstQ"]:checked').value;
-    var checked2 = document.querySelector('input[name="secondQ"]:checked').value;
-    var checked3 = document.querySelector('input[name="thirdQ"]:checked').value;
-    var checked4 = document.querySelector('input[name="fourthQ"]:checked').value;
-    var checked5 = document.querySelector('input[name="fifthQ"]:checked').value;
-    var chex = [checked1, checked2, checked3, checked4, checked5];
-    for (var i = 0; i < chex.length; i++) {
-        if (chex[i] === answers[i]) {
-            score++
-        }
-    }
-    score += ((score * 20) + secondsLeft);
-    console.log(score);
+    score += secondsLeft;
     finishEl.textContent = 'your score is:' + score;
-    advance();
+    endGameEl.setAttribute('style', 'display: block');
+    submitButton.setAttribute('style', 'display: none');
 });
 
 var highScoresEl = document.querySelector('ul');
-endGameEl = document.querySelector('#endGame');
+var endGameEl = document.querySelector('#endGame');
 var showHighScores = function (obj) {
     for (ob of obj) {
         var o = document.createElement('li')
@@ -92,8 +94,16 @@ var showHighScores = function (obj) {
         cursor = 0;
         nextEl.setAttribute('style', 'display: block');
         secondsLeft = 100;
+        endGameEl.setAttribute('style', 'display: none');
+        submitButton.setAttribute('style', 'display: block');
+        document.getElementById("highScores").innerHTML = "";
+        finishEl.textContent = '';
+        score = 0;
+        var radioClears = document.getElementsByClassName("choice");
+        for (var i = 0; i < radioClears.length; i++)
+            radioClears[i].checked = false;
         displayTime();
-        displayBox()
+        displayBox();
     })
 };
 
@@ -104,7 +114,6 @@ save.addEventListener('click', function (event) {
     var userName = userNameEl.value;
     var userNameLabel = document.querySelector('#userNameLabel');
     scoresObj.push(userName + ':' + score)
-    console.log(scoresObj)
     localStorage.setItem('scoresObj', JSON.stringify(scoresObj));
     showHighScores(scoresObj);
     save.setAttribute('style', 'display: none');
